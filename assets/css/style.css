@@ -36,6 +36,18 @@ body {
   color: var(--text-color);
   overflow-x: hidden;
   position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+* {
+  max-width: 100%;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 a {
@@ -48,10 +60,6 @@ a:hover {
   opacity: var(--hover-opacity);
 }
 
-img {
-  max-width: 100%;
-  display: block;
-}
 
 p {
   line-height: 1.6;
@@ -64,6 +72,8 @@ h3 {
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
   letter-spacing: -0.02em;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* 
@@ -75,6 +85,12 @@ Container Utility
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
 }
 
 /* 
@@ -105,8 +121,60 @@ header .logo img {
 }
 
 @media (max-width: 768px) {
+  header {
+    padding: 15px 0;
+  }
+
   header .logo img {
-    margin-top: 8px;
+    width: 150px;
+    margin-top: 0;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  header .logo img {
+    width: 120px;
+  }
+
+  .hero .hero-text h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero .hero-text h2 {
+    font-size: 1.3rem;
+  }
+
+  .hero .hero-text p {
+    font-size: 0.95rem;
+  }
+
+  .about h2,
+  .exchange-gallery h2,
+  .tokenomics h2,
+  .social-section h2,
+  .faq-section h2,
+  .features h2,
+  #how-to-buy h2 {
+    font-size: 1.75rem;
+  }
+
+  nav {
+    width: 100%;
+    right: -100%;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .gallery-grid .exchange-item {
+    height: 70px;
+  }
+
+  .gallery-grid img {
+    max-height: 40px;
   }
 }
 
@@ -139,27 +207,80 @@ nav ul li a {
 }
 
 @media (max-width: 768px) {
+  .menu-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 1000;
+    padding: 8px;
+  }
+
+  .menu-btn span {
+    width: 25px;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+  }
+
   nav {
-    position: static;
-    margin-top: 10px;
-    background: transparent;
-    width: 100%;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 280px;
+    height: 100vh;
+    background: rgba(10, 14, 26, 0.98);
+    backdrop-filter: blur(20px);
+    border-left: 2px solid rgba(0, 212, 255, 0.2);
+    transition: right 0.3s ease;
+    z-index: 999;
+    padding: 80px 20px 20px;
+    overflow-y: auto;
+  }
+
+  nav.show {
+    right: 0;
   }
 
   nav ul {
-    flex-direction: row;
-    justify-content: center;
-    gap: 16px;
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-start;
   }
 
   nav ul li {
-    font-size: 16px;
+    font-size: 18px;
+    width: 100%;
   }
 
-  .menu-btn {
-    display: none;
+  nav ul li a {
+    display: block;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+  }
+}
+
+/* Mobile menu overlay */
+@media (max-width: 768px) {
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 998;
   }
 
+  body.menu-open::after {
+    opacity: 1;
+    pointer-events: all;
+  }
 }
 
 /* 
@@ -305,25 +426,42 @@ Hero Section
 
 /* Mobile Specific Adjustments */
 @media (max-width: 768px) {
+  .hero {
+    padding: 30px 20px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    border-radius: 20px;
+  }
+
   .hero img.dog-hero {
     max-width: 100%;
-    /* Allow it to be full width on mobile */
-    border-width: 4px;
-    /* Reduce border thickness for smaller devices */
+    border-width: 3px;
+    margin-top: 20px;
   }
 
   .hero .hero-content {
     flex-direction: column;
-    /* Stack text and image vertically on mobile */
   }
 
   .hero .hero-text {
     text-align: center;
-    /* Center the text for mobile */
   }
-}
 
-@media (max-width: 768px) {
+  .hero .hero-text h1 {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+  }
+
+  .hero .hero-text h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+
+  .hero .hero-text p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+  }
+
   .hero .cta-buttons {
     display: flex;
     flex-direction: column;
@@ -334,9 +472,7 @@ Hero Section
 
   .hero .cta-buttons .btn {
     width: 100%;
-    /* Full width on mobile */
-    max-width: 250px;
-    /* Consistent maximum width */
+    max-width: 100%;
     text-align: center;
     padding: 14px 24px;
     font-size: 16px;
@@ -519,6 +655,29 @@ Features Section
   gap: 40px;
 }
 
+@media (max-width: 768px) {
+  .features {
+    margin-bottom: 60px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .feature-card {
+    padding: 24px;
+  }
+
+  .feature-card h3 {
+    font-size: 1.3rem;
+  }
+
+  .feature-card p {
+    font-size: 0.95rem;
+  }
+}
+
 .feature-card {
   padding: 32px;
   border: 2px solid rgba(0, 212, 255, 0.2);
@@ -579,6 +738,28 @@ footer {
   display: flex;
   justify-content: center;
   gap: 16px;
+}
+
+@media (max-width: 768px) {
+  footer {
+    padding: 30px 0;
+    margin-top: 50px;
+  }
+
+  .footer-content {
+    font-size: 0.85rem;
+    padding: 0 20px;
+  }
+
+  .footer-social {
+    margin-top: 15px;
+    gap: 20px;
+  }
+
+  .footer-social a {
+    width: 48px;
+    height: 48px;
+  }
 }
 
 
@@ -750,25 +931,50 @@ footer {
 
 @media (max-width: 768px) {
   .gallery-grid {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
   }
 
   .gallery-grid .exchange-item {
-    width: 120px;
-    height: 90px;
+    width: 100%;
+    height: 80px;
   }
 
   .gallery-grid img {
-    max-height: 50px;
-  }
-
-  .hero {
-    padding: 40px 20px;
+    max-height: 45px;
   }
 
   .about, .exchange-gallery, .tokenomics, .social-section {
     padding: 40px 20px;
+    margin-bottom: 60px;
+    border-radius: 20px;
+  }
+
+  .about h2,
+  .exchange-gallery h2,
+  .tokenomics h2,
+  .social-section h2,
+  .faq-section h2,
+  .features h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+
+  .about-content {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .about-image {
+    max-width: 100%;
+  }
+
+  .about-text-wrapper {
+    max-width: 100%;
+  }
+
+  .about-text-wrapper p {
+    font-size: 1rem;
   }
 }
 
@@ -1005,21 +1211,22 @@ Roadmap Section
 
 @media (max-width: 768px) {
   .roadmap-section {
-    padding: 50px 20px;
+    padding: 40px 20px;
+    margin-bottom: 60px;
   }
 
   .roadmap-section h2 {
-    font-size: 2.2rem;
+    font-size: 2rem;
     margin-bottom: 10px;
   }
 
   .roadmap-subtitle {
-    font-size: 1rem;
-    margin-bottom: 40px;
+    font-size: 0.95rem;
+    margin-bottom: 30px;
   }
 
   .roadmap-timeline {
-    padding: 30px 0;
+    padding: 20px 0;
   }
 
   .timeline-line {
@@ -1028,38 +1235,43 @@ Roadmap Section
 
   .timeline-marker {
     left: 20px;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
   }
 
   .marker-dot {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
   }
 
   .roadmap-item {
-    padding-left: 70px;
-    margin-bottom: 40px;
+    padding-left: 60px;
+    margin-bottom: 30px;
   }
 
   .roadmap-phase {
-    padding: 24px;
+    padding: 20px;
   }
 
   .phase-header h3 {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
+  }
+
+  .phase-label {
+    font-size: 0.75rem;
   }
 
   .phase-content ul li {
-    font-size: 0.95rem;
-    padding-left: 28px;
+    font-size: 0.9rem;
+    padding-left: 24px;
+    line-height: 1.6;
   }
 
   .coming-back-badge {
-    font-size: 0.7rem;
-    padding: 5px 10px;
-    top: -12px;
-    right: -12px;
+    font-size: 0.65rem;
+    padding: 4px 8px;
+    top: -10px;
+    right: -10px;
   }
 }
 
@@ -1118,6 +1330,37 @@ Roadmap Section
   margin-top: 8px;
 }
 
+@media (max-width: 768px) {
+  .faq-section {
+    margin-bottom: 60px;
+  }
+
+  .faq-section h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+
+  .faq-item {
+    padding: 18px;
+    margin-bottom: 15px;
+    border-radius: 16px;
+  }
+
+  .faq-item:hover {
+    transform: translateX(0);
+  }
+
+  .faq-item h3 {
+    font-size: 1.1rem;
+    text-align: left;
+  }
+
+  .faq-item p {
+    font-size: 0.95rem;
+    text-align: left;
+  }
+}
+
 /* 
   ------------------------------
   Social or FAQ
@@ -1161,6 +1404,32 @@ Roadmap Section
 .social-icons a img {
   width: 100%;
   height: auto;
+}
+
+@media (max-width: 768px) {
+  .social-section {
+    padding: 40px 20px;
+    margin-bottom: 60px;
+  }
+
+  .social-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .social-section p {
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+  }
+
+  .social-icons {
+    gap: 20px;
+  }
+
+  .social-icons a {
+    width: 56px;
+    height: 56px;
+  }
 }
 
 /* 
@@ -1222,6 +1491,64 @@ Roadmap Section
   opacity: 0.85;
 }
 
+.tokenomics-item .value h4.token-address-text {
+  font-size: 0.9rem;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  padding: 15px 0;
+  margin: 0;
+  color: var(--text-color);
+  font-weight: 400;
+  font-family: 'Inter', monospace;
+}
+
+@media (max-width: 768px) {
+  .tokenomics-item .value h4.token-address-text {
+    font-size: 0.75rem;
+    padding: 10px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .tokenomics {
+    padding: 40px 20px;
+    margin-bottom: 60px;
+  }
+
+  .tokenomics h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+
+  .tokenomics-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .tokenomics-item {
+    padding: 24px;
+  }
+
+  .tokenomics-item .label h3 {
+    font-size: 1.1rem;
+  }
+
+  .tokenomics-item .value {
+    font-size: 0.95rem;
+  }
+
+  .tokenomics-item .value h4 {
+    font-size: 0.8rem;
+    padding: 8px 0;
+  }
+
+  .copy-btn {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+
 .tok-address {
   margin-top: 30px;
   text-align: center;
@@ -1239,4 +1566,68 @@ Roadmap Section
 
 .tok-address button:hover {
   opacity: 0.7;
+}
+
+/* How to Buy Section */
+#how-to-buy {
+  margin: 4rem auto;
+  max-width: 800px;
+}
+
+.how-to-buy-content {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  border-radius: 1rem;
+  margin-top: 2rem;
+}
+
+.how-to-buy-content p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.how-to-buy-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.how-to-buy-buttons .btn {
+  text-decoration: none;
+  flex: 1 1 auto;
+  min-width: 150px;
+}
+
+@media (max-width: 768px) {
+  #how-to-buy {
+    margin: 3rem auto;
+    padding: 0 20px;
+  }
+
+  #how-to-buy h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .how-to-buy-content {
+    padding: 1.5rem;
+    border-radius: 16px;
+  }
+
+  .how-to-buy-content p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+  }
+
+  .how-to-buy-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .how-to-buy-buttons .btn {
+    width: 100%;
+    min-width: unset;
+  }
 }
